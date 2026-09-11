@@ -6,10 +6,10 @@ export const SlideSchema = z.object({
   imagePrompt: z.string().min(10).max(300),
 });
 
-export const PitchDeckSchema = z.object({
+export const PitchFlowSchema = z.object({
   title: z.string().min(3).max(80),
   slides: z.array(SlideSchema).min(5).max(20),
 });
 
 export type Slide = z.infer<typeof SlideSchema>;
-export type PitchDeck = z.infer<typeof PitchDeckSchema>;
+export type PitchFlow = z.infer<typeof PitchFlowSchema>;
