@@ -11,7 +11,7 @@ import { PitchFlowSchema, type PitchFlow } from "@/lib/schemas/pitch-flow";
  * A friendly error when a guardrail blocks generation.
  * Inngest catches this and saves the message on the Deck record.
  */
-export class PitchDeckGenerationError extends Error {
+export class PitchFlowGenerationError extends Error {
   readonly reason?: string;
 
   constructor(message: string, reason?: string) {
@@ -61,7 +61,7 @@ function parseAgentOutput(rawOutput: unknown): PitchFlow {
  * @returns A validated pitch deck with title + slides
  * @throws PitchDeckGenerationError when a guardrail blocks the run
  */
-export async function generatePitchDeck(idea: string): Promise<PitchFlow> {
+export async function generatePitchFlow(idea: string): Promise<PitchFlow> {
   const trimmedIdea = idea.trim();
 
   try {
@@ -74,7 +74,7 @@ export async function generatePitchDeck(idea: string): Promise<PitchFlow> {
     // Guardrail blocked us — throw a readable error
     if (isGuardrailError(error)) {
       const reason = getGuardrailReason(error);
-      throw new PitchDeckGenerationError(reason, reason);
+      throw new PitchFlowGenerationError(reason, reason);
     }
 
     // Something else went wrong (API error, network, etc.) — let it bubble up
